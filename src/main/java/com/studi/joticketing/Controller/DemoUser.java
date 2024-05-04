@@ -21,19 +21,19 @@ public class DemoUser {
     @GetMapping("id/{id}")
     public String getUserById(@PathVariable Long id) {
         var result = userService.getUserById(id);
-        return "Hello " + result.getLastName() + " " + result.getFirstName() + ", your role is " + result.getRole();
+        return "Hello " + result.getLastName() + " " + result.getFirstName();
     }
 
     @GetMapping("idResponseEntity/{id}")
     public ResponseEntity<String> getUserByIdEntity(@PathVariable Long id) {
         var result = userService.getUserById(id);
-        return ResponseEntity.ok("Hello " + result.getLastName() + " " + result.getFirstName() + ", your role is " + result.getRole());
+        return ResponseEntity.ok("Hello " + result.getLastName() + " " + result.getFirstName());
     }
 
     @GetMapping("username/{username}")
     public String getUserByUsername(@PathVariable String username) {
         var result = userService.getUserByUserName(username);
-        return "Hello " + result.getLastName() + " " + result.getFirstName() + ", your role is " + result.getRole();
+        return "Hello " + result.getLastName() + " " + result.getFirstName() ;
     }
 
     @GetMapping("usernameResponseEntity/{username}")
