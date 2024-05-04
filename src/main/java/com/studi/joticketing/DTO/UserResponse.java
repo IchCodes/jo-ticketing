@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class UserResponse {
     private String lastName;
     private String firstName;
-    private String role;
-    private String customField1;
+    private String username;
+    private String password;
 }
