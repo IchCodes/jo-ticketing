@@ -3,6 +3,7 @@ package com.studi.joticketing.Service;
 import com.studi.joticketing.DTO.UserResponse;
 import com.studi.joticketing.Mapper.UserMapper;
 import com.studi.joticketing.Repository.UserRepository;
+import com.studi.joticketing.model.Role;
 import com.studi.joticketing.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class UserService {
                 .lastName(userResponse.getLastName().toUpperCase())
                 .username(userResponse.getUsername())
                 .password(userResponse.getPassword())
-                .role("USER")
+                .role(Role.USER)
                 .user_key(UUID.randomUUID().toString())
                 .build();
          userRepository.save(user);
