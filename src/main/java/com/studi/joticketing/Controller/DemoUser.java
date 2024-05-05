@@ -40,4 +40,14 @@ public class DemoUser {
     public ResponseEntity<UserResponse> getUserByUsernameResponseEntity(@PathVariable String username) {
         return ResponseEntity.ok(userService.getUserByUserName(username));
     }
+
+    @GetMapping("/demo")
+    public ResponseEntity<String> demo() {
+        return ResponseEntity.ok("Hello from secured url");
+    }
+
+    @GetMapping("/admin_only")
+    public ResponseEntity<String> adminOnly() {
+        return ResponseEntity.ok("Hello from admin only url");
+    }
 }
