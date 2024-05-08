@@ -48,9 +48,8 @@ public class AuthenticationService {
 
         user = repository.save(user);
 
-        String jwt = jwtService.generateToken(user);
 
-        return new AuthenticationResponse(jwt, "User registration was successful");
+        return new AuthenticationResponse(null, "User "+ user.getFirstName() + " "+ user.getLastName() +"  registration was successful");
 
     }
 
@@ -65,7 +64,7 @@ public class AuthenticationService {
         User user = repository.findByUsername(request.getUsername()).orElseThrow();
         String jwt = jwtService.generateToken(user);
 
-        return new AuthenticationResponse(jwt, "User login was successful");
+        return new AuthenticationResponse(jwt, "User "+ user.getFirstName() + " "+ user.getLastName() +" login was successful");
 
     }
 }
