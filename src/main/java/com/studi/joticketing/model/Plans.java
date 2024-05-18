@@ -21,4 +21,8 @@ public class Plans {
     private String plan;
 
     private int ticket_quantity;
+
+    private int price;
+
+    private String image_url;
 }
