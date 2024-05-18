@@ -11,6 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -21,23 +23,28 @@ public class TicketService {
 
     private final UserRepository userRepository;
 
-    public TicketResponse bookTicket(TicketRequest request) {
+    public List<TicketResponse> bookTicket(TicketRequest request) {
+        List<TicketResponse> responses = new ArrayList<>();
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        String ticketKey = UUID.randomUUID().toString();
+        for (Integer plan_id : request.getPlan_id()) {
+            String ticketKey = UUID.randomUUID().toString();
 
-        Tickets ticket = Tickets.builder()
-                .ticket_key(ticketKey)
-                .plan_id(request.getPlan_id())
-                .user_id(user.getId())
-                .qr_code(user.getUser_key() + "-" + ticketKey )
-                .build();
+            Tickets ticket = Tickets.builder()
+                    .ticket_key(ticketKey)
+                    .plan_id(plan_id)
+                    .user_id(user.getId())
+                    .qr_code(user.getUser_key() + "." + ticketKey )
+                    .build();
 
-        ticket = ticketsRepository.save(ticket);
+            ticket = ticketsRepository.save(ticket);
 
-        return new TicketResponse(ticket.getQr_code(), "message");
+            responses.add(new TicketResponse(ticket.getQr_code(), "message"));
+        }
+
+        return responses;
     }
 }
