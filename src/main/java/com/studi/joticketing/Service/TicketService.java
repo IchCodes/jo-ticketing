@@ -2,8 +2,10 @@ package com.studi.joticketing.Service;
 
 import com.studi.joticketing.DTO.TicketRequest;
 import com.studi.joticketing.DTO.TicketResponse;
+import com.studi.joticketing.Repository.PlansRepository;
 import com.studi.joticketing.Repository.TicketsRepository;
 import com.studi.joticketing.Repository.UserRepository;
+import com.studi.joticketing.model.Plans;
 import com.studi.joticketing.model.Tickets;
 import com.studi.joticketing.model.User;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,26 +26,47 @@ public class TicketService {
 
     private final UserRepository userRepository;
 
+    private final PlansRepository plansRepository;
+
     public List<TicketResponse> bookTicket(TicketRequest request) {
         List<TicketResponse> responses = new ArrayList<>();
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        Plans plan = new Plans();
 
         for (Integer plan_id : request.getPlan_id()) {
             String ticketKey = UUID.randomUUID().toString();
+            plan = plansRepository.findById(Long.valueOf(plan_id)).orElseThrow(() -> new UsernameNotFoundException("Plan not found"));
 
             Tickets ticket = Tickets.builder()
                     .ticket_key(ticketKey)
                     .plan_id(plan_id)
-                    .user_id(user.getId())
+                    .userId(user.getId())
                     .qr_code(user.getUser_key() + "." + ticketKey )
                     .build();
 
             ticket = ticketsRepository.save(ticket);
 
-            responses.add(new TicketResponse(ticket.getQr_code(), "message"));
+            responses.add(new TicketResponse(ticket.getId().toString(), user.getLastName() + " " + user.getFirstName(), plan.getPlan(), ticket.getQr_code(), "Ticket booked successfully"));
+        }
+
+        return responses;
+    }
+
+    public List<TicketResponse> getUserTickets() {
+        List<TicketResponse> responses = new ArrayList<>();
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        List<Tickets> tickets = ticketsRepository.findByUserId(user.getId());
+
+        for (Tickets ticket : tickets) {
+            Plans plan = plansRepository.findById(ticket.getPlan_id()).orElseThrow(() -> new UsernameNotFoundException("Plan not found"));
+            responses.add(new TicketResponse(ticket.getId().toString(), user.getLastName() + " " + user.getFirstName(), plan.getPlan(), ticket.getQr_code(), "Ticket booked successfully"));
         }
 
         return responses;

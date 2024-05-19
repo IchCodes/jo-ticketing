@@ -21,7 +21,8 @@ public class Tickets {
 
     private long plan_id;
 
-    private long user_id;
+    @Column(name = "user_id")
+    private long userId;
 
     private String qr_code;
 }
