@@ -7,25 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Tickets")
+@Table(name = "Orders")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Tickets {
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String ticket_key;
-
-    private long plan_id;
-
-    @Column(name = "user_id")
-    private long userId;
-
-    private String qr_code;
-
-    @Column(name = "order_id")
-    private long orderId;
 }

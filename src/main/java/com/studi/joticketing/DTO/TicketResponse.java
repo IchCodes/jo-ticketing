@@ -8,6 +8,7 @@ import lombok.Setter;
 @Data
 @AllArgsConstructor
 public class TicketResponse {
+    private final long order_id;
     private final String ticket_id;
     private final String owner;
     private final String plan;
