@@ -30,7 +30,9 @@ public class SecurityConfig {
 
     private static final String[] WHITE_LIST_URL = {"/api/v1/auth/login/**",
             "/api/v1/auth/register/**",
-            "/api/v1/plans/**"};
+            "/api/v1/plans/all/**"};
+
+    private static final String[] ADMIN_LIST_URL = {"/api/v1/user/admin_only/**", "/api/v1/plans/delete/**"};
 
     private final UserDetailsServiceImp userDetailsServiceImp;
 
@@ -56,7 +58,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         req->req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                .requestMatchers("/admin_only/**").hasAuthority("ADMIN")
+                                .requestMatchers(ADMIN_LIST_URL).hasAuthority("ADMIN")
                                 .anyRequest()
                                 .authenticated()
                 ).userDetailsService(userDetailsServiceImp)

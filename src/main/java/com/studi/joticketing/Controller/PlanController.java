@@ -3,9 +3,9 @@ package com.studi.joticketing.Controller;
 import com.studi.joticketing.Service.PlanService;
 import com.studi.joticketing.model.Plans;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,5 +19,11 @@ public class PlanController {
         @GetMapping("/all")
         public List<Plans> getAllPlans() {
             return planService.getAllPlans();
+        }
+
+        @DeleteMapping("/delete/{id}")
+        public ResponseEntity<String> deletePlanById(@PathVariable Long id) {
+            planService.deletePlanById(id);
+            return ResponseEntity.ok("Plan deleted successfully");
         }
 }

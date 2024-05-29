@@ -13,7 +13,12 @@ public class PlanService {
 
     private final PlansRepository planRepository;
 
+
     public List<Plans> getAllPlans() {
         return planRepository.findAll();
+    }
+
+    public void deletePlanById(Long id) {
+        planRepository.deleteById(id);
     }
 }
