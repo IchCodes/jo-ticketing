@@ -49,7 +49,7 @@ public class TicketService {
 
             Tickets ticket = Tickets.builder()
                     .ticket_key(ticketKey)
-                    .plan_id(plan_id)
+                    .planId(plan_id)
                     .userId(user.getId())
                     .qr_code(user.getUser_key() + "." + ticketKey )
                     .orderId(order.getId())
@@ -73,7 +73,7 @@ public class TicketService {
         List<Tickets> tickets = ticketsRepository.findByUserId(user.getId());
 
         for (Tickets ticket : tickets) {
-            Plans plan = plansRepository.findById(ticket.getPlan_id()).orElseThrow(() -> new UsernameNotFoundException("Plan not found"));
+            Plans plan = plansRepository.findById(ticket.getPlanId()).orElseThrow(() -> new UsernameNotFoundException("Plan not found"));
             responses.add(new TicketResponse(ticket.getOrderId(),ticket.getId().toString(), user.getLastName() + " " + user.getFirstName(), plan.getPlan(), ticket.getQr_code(), "Ticket booked successfully"));
         }
 

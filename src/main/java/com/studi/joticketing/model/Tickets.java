@@ -19,7 +19,8 @@ public class Tickets {
 
     private String ticket_key;
 
-    private long plan_id;
+    @Column(name = "plan_id")
+    private long planId;
 
     @Column(name = "user_id")
     private long userId;

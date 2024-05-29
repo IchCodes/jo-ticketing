@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface TicketsRepository extends JpaRepository<Tickets, Long> {
     List<Tickets> findByUserId(Long user_Id);
+
+    List<Tickets> findByPlanId(Long id);
 }
