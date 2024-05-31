@@ -25,4 +25,12 @@ public class Plans {
     private int price;
 
     private String image_url;
+
+    public void setPlan(String plan) {
+        if (plan != null && !plan.isEmpty()) {
+            this.plan = plan.substring(0, 1).toUpperCase() + plan.substring(1).toLowerCase();
+        } else {
+            this.plan = plan;
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.studi.joticketing.Controller;
 
+import com.studi.joticketing.DTO.StandardResponse;
 import com.studi.joticketing.Service.PlanService;
 import com.studi.joticketing.model.Plans;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +22,15 @@ public class PlanController {
             return planService.getAllPlans();
         }
 
+        @PostMapping("/add")
+        public ResponseEntity<Plans> addPlan(@RequestBody Plans plan) {
+            Plans newPlan = planService.addPlan(plan);
+            return ResponseEntity.ok(newPlan);
+        }
+
         @DeleteMapping("/delete/{id}")
-        public ResponseEntity<String> deletePlanById(@PathVariable Long id) {
-            planService.deletePlanById(id);
-            return ResponseEntity.ok("Plan deleted successfully");
+        public ResponseEntity<StandardResponse> deletePlanById(@PathVariable Long id) {
+            StandardResponse response = planService.deletePlanById(id);
+            return ResponseEntity.ok(response);
         }
 }
