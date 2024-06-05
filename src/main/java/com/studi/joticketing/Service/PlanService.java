@@ -37,7 +37,8 @@ public class PlanService {
         return new StandardResponse("Plan and associated tickets deleted successfully");
     }
 
-    public Plans addPlan(Plans plan) {
-        return planRepository.save(plan);
+    public StandardResponse addPlan(Plans plan) {
+         planRepository.save(plan);
+        return new StandardResponse("Plan added successfully");
     }
 }

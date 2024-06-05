@@ -23,9 +23,9 @@ public class PlanController {
         }
 
         @PostMapping("/add")
-        public ResponseEntity<Plans> addPlan(@RequestBody Plans plan) {
-            Plans newPlan = planService.addPlan(plan);
-            return ResponseEntity.ok(newPlan);
+        public ResponseEntity<StandardResponse> addPlan(@RequestBody Plans plan) {
+            StandardResponse response = planService.addPlan(plan);
+            return ResponseEntity.ok(response);
         }
 
         @DeleteMapping("/delete/{id}")
