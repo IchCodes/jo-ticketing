@@ -24,7 +24,13 @@ public class PlanController {
 
         @PostMapping("/add")
         public ResponseEntity<StandardResponse> addPlan(@RequestBody Plans plan) {
-            StandardResponse response = planService.addPlan(plan);
+            StandardResponse response = planService.addPlan(plan, true);
+            return ResponseEntity.ok(response);
+        }
+
+        @PostMapping("/update")
+        public ResponseEntity<StandardResponse> updatePlan(@RequestBody Plans plan) {
+            StandardResponse response = planService.addPlan(plan, false);
             return ResponseEntity.ok(response);
         }
 
