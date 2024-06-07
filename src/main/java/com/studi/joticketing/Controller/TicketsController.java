@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/tickets")
@@ -27,5 +28,11 @@ public class TicketsController {
     public ResponseEntity<List<TicketResponse>> getUserTickets() {
         List<TicketResponse> responses = ticketService.getUserTickets();
         return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/sales")
+    public ResponseEntity<Map<Long, Long>> getSales() {
+        Map<Long, Long> sales = ticketService.getSales();
+        return ResponseEntity.ok(sales);
     }
 }

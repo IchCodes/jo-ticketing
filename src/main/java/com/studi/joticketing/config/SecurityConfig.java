@@ -32,7 +32,7 @@ public class SecurityConfig {
             "/api/v1/auth/register/**",
             "/api/v1/plans/all/**"};
 
-    private static final String[] ADMIN_LIST_URL = {"/api/v1/user/admin_only/**", "/api/v1/plans/delete/**", "/api/v1/plans/add/**", "/api/v1/plans/update/**"};
+    private static final String[] ADMIN_LIST_URL = {"/api/v1/user/admin_only/**", "/api/v1/plans/delete/**", "/api/v1/plans/add/**", "/api/v1/plans/update/**","/api/v1/tickets/sales/**"};
 
     private final UserDetailsServiceImp userDetailsServiceImp;
 
