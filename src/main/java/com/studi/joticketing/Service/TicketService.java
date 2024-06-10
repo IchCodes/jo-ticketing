@@ -84,9 +84,13 @@ public class TicketService {
         return responses;
     }
 
-    public Map<Long, Long> getSales() {
+    public Map<String, Long> getSales() {
         List<Tickets> tickets = ticketsRepository.findAll();
         return tickets.stream()
-                .collect(Collectors.groupingBy(Tickets::getPlanId, Collectors.counting()));
+                .collect(Collectors.groupingBy(ticket -> {
+                    Plans plan = plansRepository.findById(ticket.getPlanId())
+                            .orElseThrow(() -> new UsernameNotFoundException("Plan not found"));
+                    return plan.getPlan();
+                }, Collectors.counting()));
     }
 }

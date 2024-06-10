@@ -31,8 +31,8 @@ public class TicketsController {
     }
 
     @GetMapping("/sales")
-    public ResponseEntity<Map<Long, Long>> getSales() {
-        Map<Long, Long> sales = ticketService.getSales();
+    public ResponseEntity<Map<String, Long>> getSales() {
+        Map<String, Long> sales = ticketService.getSales();
         return ResponseEntity.ok(sales);
     }
 }
