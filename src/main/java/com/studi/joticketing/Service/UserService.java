@@ -3,6 +3,7 @@ package com.studi.joticketing.Service;
 import com.studi.joticketing.DTO.UserResponse;
 import com.studi.joticketing.Mapper.UserMapper;
 import com.studi.joticketing.Repository.UserRepository;
+import com.studi.joticketing.exception.EntityNotFoundException;
 import com.studi.joticketing.model.Role;
 import com.studi.joticketing.model.User;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +20,13 @@ public class UserService {
     public UserResponse getUserById(Long id) {
         return userRepository.findById(id)
                 .map(UserMapper::toUserResponse)
-                .orElseThrow();
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
     public UserResponse getUserByUserName(String username) {
         return userRepository.findByUsername(username)
                 .map(UserMapper::toUserResponse)
-                .orElseThrow();
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
     public String saveUser(UserResponse userResponse) {
