@@ -6,6 +6,7 @@ import com.studi.joticketing.Repository.OrdersRepository;
 import com.studi.joticketing.Repository.PlansRepository;
 import com.studi.joticketing.Repository.TicketsRepository;
 import com.studi.joticketing.Repository.UserRepository;
+import com.studi.joticketing.exception.InvalidRequestException;
 import com.studi.joticketing.model.Orders;
 import com.studi.joticketing.model.Plans;
 import com.studi.joticketing.model.Tickets;
@@ -31,6 +32,11 @@ public class TicketService {
     private final OrdersRepository ordersRepository;
 
     public List<TicketResponse> bookTicket(TicketRequest request) {
+
+        if (request == null || request.getPlan_id() == null || request.getPlan_id().isEmpty()) {
+            throw new InvalidRequestException("Invalid request, plan_id is required to book ticket");
+        }
+
         List<TicketResponse> responses = new ArrayList<>();
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
