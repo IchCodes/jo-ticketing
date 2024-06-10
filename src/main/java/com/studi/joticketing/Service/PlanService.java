@@ -3,6 +3,7 @@ package com.studi.joticketing.Service;
 import com.studi.joticketing.DTO.StandardResponse;
 import com.studi.joticketing.Repository.PlansRepository;
 import com.studi.joticketing.Repository.TicketsRepository;
+import com.studi.joticketing.exception.EntityNotFoundException;
 import com.studi.joticketing.model.Plans;
 import com.studi.joticketing.model.Tickets;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +26,7 @@ public class PlanService {
     }
 
     public StandardResponse deletePlanById(Long id) {
-        Optional<Plans> optionalPlan = planRepository.findById(id);
-        if (optionalPlan.isEmpty()) {
-            return new StandardResponse("Plan not found");
-        }
+        Optional<Plans> optionalPlan = Optional.ofNullable(planRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Plan not found")));
 
         List<Tickets> tickets = ticketsRepository.findByPlanId(id);
         ticketsRepository.deleteAll(tickets);

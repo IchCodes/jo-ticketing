@@ -1,11 +1,13 @@
 package com.studi.joticketing.Service;
 
 import com.studi.joticketing.Repository.UserRepository;
+import com.studi.joticketing.exception.WrongCredentialsException;
 import com.studi.joticketing.model.AuthenticationResponse;
 import com.studi.joticketing.model.Role;
 import com.studi.joticketing.model.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -54,12 +56,16 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(User request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
-                )
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getUsername(),
+                            request.getPassword()
+                    )
+            );
+        } catch (AuthenticationException e) {
+            throw new WrongCredentialsException("Invalid username or password");
+        }
 
         User user = repository.findByUsername(request.getUsername()).orElseThrow();
         String jwt = jwtService.generateToken(user);
