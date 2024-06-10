@@ -3,6 +3,7 @@ package com.studi.joticketing.exception.handler;
 import com.studi.joticketing.DTO.ErrorMessage;
 import com.studi.joticketing.exception.EntityNotFoundException;
 import com.studi.joticketing.exception.InvalidRequestException;
+import com.studi.joticketing.exception.UnauthorizedUserException;
 import com.studi.joticketing.exception.WrongCredentialsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,5 +43,15 @@ public class AppExceptionHandler {
                 .build();
 
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = {UnauthorizedUserException.class})
+    public ResponseEntity<Object> UnauthorizedUserException(UnauthorizedUserException ex) {
+        ErrorMessage errorMessage = ErrorMessage.builder()
+                .message(ex.getMessage())
+                .timestamp(new Date())
+                .build();
+
+        return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
     }
 }
