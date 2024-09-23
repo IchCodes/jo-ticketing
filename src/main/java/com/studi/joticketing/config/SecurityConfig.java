@@ -41,7 +41,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // Add more origins if needed
+        configuration.setAllowedOrigins(Arrays.asList("https://studi.projet.fun")); // Add more origins if needed
         configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type"));
         configuration.setExposedHeaders(Arrays.asList("Authorization"));
